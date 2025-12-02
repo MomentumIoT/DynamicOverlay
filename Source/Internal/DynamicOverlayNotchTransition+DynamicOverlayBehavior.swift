@@ -12,6 +12,7 @@ extension NotchDimension {
 
     enum ValueType: Hashable {
         case absolute
+        case absoluteInverse
         case fractional
     }
 }

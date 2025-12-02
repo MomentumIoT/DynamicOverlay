@@ -107,6 +107,11 @@ public extension NotchDimension {
     static func absolute(_ value: Double) -> NotchDimension {
         NotchDimension(type: .absolute, value: value)
     }
+    
+    /// Creates a dimension with an absolute point value.
+    static func absoluteInverse(_ value: Double) -> NotchDimension {
+        NotchDimension(type: .absoluteInverse, value: value)
+    }
 
     /// Creates a dimension that is computed as a fraction of the height of the overlay parent view.
     static func fractional(_ value: Double) -> NotchDimension {

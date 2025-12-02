@@ -49,6 +49,8 @@ class OverlayNotchIndexMapper {
         switch dimension.type {
         case .absolute:
             return CGFloat(dimension.value)
+        case .absoluteInverse:
+            return CGFloat(availableHeight - dimension.value)
         case .fractional:
             return availableHeight * CGFloat(dimension.value)
         }

@@ -88,9 +88,14 @@ class OverlayContainerCoordinator {
             container.moveOverlay(toNotchAt: index, animated: animated)
         }
         if changes.contains(.scrollView) {
-            CATransaction.setCompletionBlock { [weak container] in
-                guard let overlay = container?.topViewController?.view else { return }
-                container?.drivingScrollView = state.drivingScrollViewProxy.findScrollView(in: overlay)
+            guard let overlay = container.topViewController?.view else { return }
+
+            if animated {
+                CATransaction.setCompletionBlock { [weak container] in
+                   container?.drivingScrollView = state.drivingScrollViewProxy.findScrollView(in: overlay)
+                }
+            } else {
+                container.drivingScrollView = state.drivingScrollViewProxy.findScrollView(in: overlay)
             }
         }
         self.state = state
@@ -109,7 +114,7 @@ extension OverlayContainerCoordinator: OverlayContainerViewControllerDelegate {
     func numberOfNotches(in containerViewController: OverlayContainerViewController) -> Int {
         indexMapper.reload(
             layout: state.layout,
-            availableHeight: containerViewController.availableSpace
+            availableHeight: containerViewController.availableSpace - containerViewController.view.safeAreaInsets.top
         )
         return indexMapper.numberOfOverlayIndexes()
     }
